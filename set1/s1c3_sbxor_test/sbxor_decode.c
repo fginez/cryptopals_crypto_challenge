@@ -3,12 +3,21 @@
 #include <ctype.h>
 #include "sbxor_decode.h"
 
-#define ATTEMPTS	4
+#define USE_SPACES_IN_ATTEMPTS
 
+#ifdef USE_SPACES_IN_ATTEMPTS
+#define ATTEMPTS	5
+const unsigned char most_frequent_EN[ATTEMPTS]   = {'E', 'T', 'A', 'O', ' '};
+const unsigned char most_frequent_PTBR[ATTEMPTS] = {'A', 'E', 'O', 'S', ' '};
+#else
+#define ATTEMPTS	4
 const unsigned char most_frequent_EN[ATTEMPTS]   = {'E', 'T', 'A', 'O'};
 const unsigned char most_frequent_PTBR[ATTEMPTS] = {'A', 'E', 'O', 'S'};
+#endif
 
-const unsigned char xor_chars[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"};
+
+
+const unsigned char xor_chars[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ''`^~;?:/.>,<[]{}-=+!"};
 
 int sbxor_decode(const unsigned char xoring_byte, unsigned char* data, const unsigned int len)
 {
