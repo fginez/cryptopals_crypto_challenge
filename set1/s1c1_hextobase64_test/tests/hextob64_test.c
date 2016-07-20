@@ -81,7 +81,7 @@ int main(int argc, char** argv)
         if ( NULL != pOutput )
         {
             int out_len;
-            out_len = hextob64(test_array2[i], strlen((char*)test_array2[i]), pOutput);
+            out_len = b64tohex(test_array2[i], strlen((char*)test_array2[i]), pOutput);
             if (out_len)
             {
                 printf("Testing string %d...", i);
@@ -91,7 +91,13 @@ int main(int argc, char** argv)
                 }
                 else
                 {
-                    printf("FAIL\n");
+                    printf("FAIL - outlen=%d expected=%d out: ", out_len, strlen((char*)res_array2[i]));
+                    int j=0;
+                    for(j=0; j<out_len; j++) 
+                    {
+                    	printf("%c", *(pOutput+j));	
+                    }
+                    printf("\n");
                 }                    
             }
             else

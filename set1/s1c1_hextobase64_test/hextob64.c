@@ -52,26 +52,51 @@ int b64tohex(const unsigned char *in, const int in_len, unsigned char* out)
 ///       | h0 | h1 | h2 |    hexadecimal raw bytes
 ///       +----+----+----+
 ///
+/// base64 stream
 /// +---------------+---------------+---------------+---------------+
 /// |      b0       |      b1       |      b2       |      b3       |
 /// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 /// |7|6|5|4|3|2|1|0|7|6|5|4|3|2|1|0|7|6|5|4|3|2|1|0|7|6|5|4|3|2|1|0|
 /// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+/// \              / \              /
+///  \____    ____/   \____    ____/
+///       |  |             |  |
+///    get symbol       get symbol
+///      index            index
+/// [0 ~ 63] (6bits) [0 ~ 63] (6bits)
+/// +-+-+-+-+-+-+-+   +-+-+-+-+-+-+-+
+/// |5|4|4|3|2|1|0|   |5|4|4|3|2|1|0|
+/// +-+-+-+-+-+-+-+   +-+-+-+-+-+-+-+
+///    align all     align upper 2bits    
+///      << 2             AND 0xC0
+///                         >> 6
+/// +-----------------+
+/// |       h0        |
+/// +-+-+-+-+-+-+-+-+-+
+/// |5|4|4|3|2|1|0|5|4|
+/// +-+-+-+-+-+-+-+-+-+
+///                \__\__ came from b1
 ///
-///
-///
-///
-///
-
-	
 	int idx_out = 0, idx_in = 0;
 	
     do
     {
-        out[idx_out] = find_index(in[idx_in])<<2 | (find_index(in[idx_in+1]) & 0x30)>>4;
-        if (idx_in+4 < in_len)
+    	if ( in[idx_in] == 0x0a || (in[idx_in] == 0x0d) )
+    	{
+    		idx_in++;
+    		continue;	
+    	}
+    	
+        out[idx_out++] = ( find_index(in[idx_in])<<2 ) | (find_index(in[idx_in+1]) & 0xF0)>>4;
+        if ((idx_in+2 < in_len) && (in[idx_in+2] != '='))
         {
-            out[idx_out+1] = (find_index(in[idx_in+1]) & 0x0F)<<4 | (find_index(in[idx_in+2]) & 0x3C)>>2;
+        	out[idx_out] =  (find_index(in[idx_in+1]) & 0x0F) << 4;
+        	out[idx_out++] |= (find_index(in[idx_in+2]) & 0x3C) >> 2;
+        }
+        
+        if ((idx_in+3) < in_len && (in[idx_in+3] != '='))
+        {
+            out[idx_out++] = (find_index(in[idx_in+2]) & 0x03)<<6 | find_index(in[idx_in+3]); 
         }
 
         idx_in += 4;
