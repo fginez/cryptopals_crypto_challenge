@@ -1,6 +1,46 @@
-#include ""
+#include <stdio.h>
+#include <stdlib.h>
+#include "hextob64.h"
+#include "fileops.h"
+#include "break_repkxor.h"
+#include "printbuffer.h"
 
-int main()
+int repkxor_break_test()
 {
+	char* pFile;
+	int iFileLen;
+	int i;
 	
+	iFileLen = LoadFile("6.txt", &pFile);
+	if ( 0 < iFileLen ) 
+	{
+		int iDecodedLen = b64tohex_sizehelper(iFileLen);
+		int iOutLen;
+		char* pDecodedFile = (char*) malloc(iDecodedLen);
+
+		printf("Encoded file begin: ");
+		print_hex((unsigned char*) pFile, 10); printf("\n");
+		printf("Encoded file end: ");
+		print_hex((unsigned char*) &pFile[iFileLen-11], 10); printf("\n");
+		
+		iOutLen = b64tohex((const unsigned char*) pFile, iFileLen, (unsigned char*) pDecodedFile);
+
+		printf("Decoded file begin: ");
+		print_hex((unsigned char*) pDecodedFile, 10); printf("\n");
+		printf("Decoded file end: ");
+		print_hex((unsigned char*) &pDecodedFile[iOutLen-10], 10); printf("\n");
+		
+		break_it((unsigned char*) pDecodedFile, iOutLen);
+		
+		printf("Resulting file:\n");
+		
+		for (i=0; i<iOutLen;i++)
+		{
+			printf("%c", pDecodedFile[i]);
+		}
+		printf("\n");
+	}
+	
+	return 0;
 }
+

@@ -4,13 +4,25 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../hamming_dist.c 
+../break_repkxor.c \
+../hamming_dist.c \
+../hextob64.c \
+../printbuffer.c \
+../sbxor_decode.c 
 
 OBJS += \
-./hamming_dist.o 
+./break_repkxor.o \
+./hamming_dist.o \
+./hextob64.o \
+./printbuffer.o \
+./sbxor_decode.o 
 
 C_DEPS += \
-./hamming_dist.d 
+./break_repkxor.d \
+./hamming_dist.d \
+./hextob64.d \
+./printbuffer.d \
+./sbxor_decode.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

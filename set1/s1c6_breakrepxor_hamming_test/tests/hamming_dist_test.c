@@ -3,7 +3,7 @@
 
 #define EXPECTED_DISTANCE	37
 
-int main()
+int hamming_dist_test()
 {
 	int d;
 	const unsigned char a[] = "this is a test";
