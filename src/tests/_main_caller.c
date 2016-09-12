@@ -4,17 +4,15 @@
 #define APPLET_ENTRY(name) name##_main
 #define APPLET_GETDESCRIPTION(name)	name##_getdesc
 #define INSERT_APPLET(name) {&APPLET_ENTRY(name), &APPLET_GETDESCRIPTION(name)}
-
-APPLET_PROTO(s1c1);
-APPLET_PROTO(s1c2);
-
 typedef struct applet
 {
 	int (*entrypoint)(int, char**);
 	char* (*desc)();
 } APPLET;
 
-const unsigned int NUM_OF_CHALLENGES = 2;
+#define NUM_OF_CHALLENGES 2
+APPLET_PROTO(s1c1);
+APPLET_PROTO(s1c2);
 
 APPLET applet_list[NUM_OF_CHALLENGES] = {
 	INSERT_APPLET(s1c1),
@@ -28,7 +26,7 @@ int main(int argc, char** argv)
 	{
 		int iAppletReturnCode;
 		printf("%s\n", applet_list[nAppletCounter].desc());
-		iAppletReturnCode = applet_list[nAppletCounter].entrypoint();
+		iAppletReturnCode = applet_list[nAppletCounter].entrypoint(1, NULL);
 	}
 
 	return 0;
