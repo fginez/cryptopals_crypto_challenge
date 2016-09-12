@@ -51,7 +51,7 @@ int s1c1_main(int argc, char** argv)
             if (out_len)
             {
                 printf("Testing string %d...", i);
-                if ( 0 == strncmp((char*)pOutput, (char*)res_array[i], min(out_len, strlen((char*)res_array[i]) ) ) )
+                if ( 0 == strncmp((char*)pOutput, (char*)res_array[i], min((size_t)out_len, strlen((char*)res_array[i]) ) ) )
                 {
                     printf("SUCCESS\n");
                 }
@@ -83,7 +83,7 @@ int s1c1_main(int argc, char** argv)
             if (out_len)
             {
                 printf("Testing string %d...", i);
-                if ( 0 == strncmp((char*)pOutput, (char*)res_array2[i], min(out_len, strlen((char*)res_array2[i]) ) ) )
+                if ( 0 == strncmp((char*)pOutput, (char*)res_array2[i], min((size_t)out_len, strlen((char*)res_array2[i]) ) ) )
                 {
                     printf("SUCCESS\n");
                 }
