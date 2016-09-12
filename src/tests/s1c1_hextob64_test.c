@@ -42,8 +42,8 @@ int s1c1_main(int argc, char** argv)
 
     for(i=0; i<NUM_TEST_STRINGS;i++)
     {
+		unsigned char* pOutput = (unsigned char*) malloc(hextob64_sizehelper(sizeof(test_array[i])));
     	printf("Testing hex to base64 convertion\n");
-        unsigned char* pOutput = (unsigned char*) malloc(hextob64_sizehelper(sizeof(test_array[i])));
         if ( NULL != pOutput )
         {
             int out_len;
@@ -74,8 +74,8 @@ int s1c1_main(int argc, char** argv)
 
     for(i=0; i<NUM_TEST_STRINGS;i++)
     {
-    	printf("Testing base64 to hex convertion\n");
-        unsigned char* pOutput = (unsigned char*) malloc(b64tohex_sizehelper(sizeof(test_array2[i])));
+		unsigned char* pOutput = (unsigned char*) malloc(b64tohex_sizehelper(sizeof(test_array2[i])));
+    	printf("Testing base64 to hex convertion\n");        
         if ( NULL != pOutput )
         {
             int out_len;
@@ -89,8 +89,8 @@ int s1c1_main(int argc, char** argv)
                 }
                 else
                 {
-                    printf("FAIL - outlen=%d expected=%d out: ", out_len, strlen((char*)res_array2[i]));
-                    int j=0;
+					int j=0;
+                    printf("FAIL - outlen=%d expected=%d out: ", out_len, strlen((char*)res_array2[i]));                    
                     for(j=0; j<out_len; j++) 
                     {
                     	printf("%c", *(pOutput+j));	
