@@ -48,3 +48,15 @@ Temporary Items
 
 # Eclipse metadata
 .metadata
+
+# Visual studio trash
+*.sdf
+*.v11.suo
+*.ilk
+*.pdb
+
+# Debug
+Debug
+build/Debug
+
+# Binaries
