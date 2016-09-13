@@ -7,6 +7,12 @@
 #define min(a,b) (a<b?a:b)
 #endif
 
+char* s1c1_getdesc()
+{
+	return "here comes set 1 challenge 1 description";
+}
+
+
 int s1c1_main(int argc, char** argv)
 {
     int i;
