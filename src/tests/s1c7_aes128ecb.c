@@ -1,6 +1,7 @@
 #include "../include/cryptopals.h"
 #include "../include/libutil.h"
 #include "../include/aes128ecb.h"
+#include "../include/hextob64.h"
 
 int s1c7_main()
 {
@@ -19,8 +20,8 @@ int s1c7_main()
 			iDecodedLen = b64tohex(pEncodedFile, iEncodedLen, pDecodedFile);
 			if ( 0 < iDecodedLen )
 			{
-				printf("Binary file length=%d\n", iDecodedLen);
 				unsigned char* pClearBuffer = malloc(iDecodedLen);
+				printf("Binary file length=%d\n", iDecodedLen);
 				if ( NULL != pClearBuffer )
 				{
 					int iClearLen = 0;

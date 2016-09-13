@@ -1,10 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "../include/cryptopals.h"
+#include "../include/libutil.h"
+#include "../include/sbxor_decode.h"
 
-#include "hamming_dist.h"
-#include "sbxor_decode.h"
-#include "printbuffer.h"
 
 void transpose_blocks(const unsigned char* in, unsigned char* out, const int bufferlen, const int keylen);
 int discover_keylen(unsigned char* pucBuffer, unsigned int uiLen, int min, int max);
@@ -66,7 +63,8 @@ void transpose_blocks(const unsigned char* in, unsigned char* out, const int buf
 {
 	int iNumOfPicks = bufferlen / keylen;
 	int i, j, iTargetIndex, iOutIndex;
-		
+	
+	iOutIndex=0;
 	for (j=0; j<keylen; j++)
 	{
 		iTargetIndex = j;
@@ -85,7 +83,7 @@ void transpose_blocks(const unsigned char* in, unsigned char* out, const int buf
 
 void break_it(unsigned char* pucBuffer, unsigned int uiLen)
 {
-	int i, j;
+	int i;
 	int iMinKeyLen = 14;
 	int iMaxKeyLen = 40;
 	int iTransposedBlockLen = 0;
@@ -132,7 +130,7 @@ void break_it(unsigned char* pucBuffer, unsigned int uiLen)
 	print_chars(pucKey, iGuessedKeyLen); printf("\n");
 	
 	// Decode buffer	
-	for(i=0; i<uiLen; i++)
+	for(i=0; (unsigned int)i<uiLen; i++)
 	{
 		*(pucBuffer+i) = *(pucBuffer+i) ^ *(pucKey+(i%iGuessedKeyLen)); 
 	}

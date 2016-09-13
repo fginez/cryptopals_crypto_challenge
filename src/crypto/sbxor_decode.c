@@ -1,7 +1,5 @@
-#include <stdlib.h>
-#include <memory.h>
-#include <ctype.h>
-#include "sbxor_decode.h"
+#include "../include/cryptopals.h"
+#include "../include/sbxor_decode.h"
 
 #define USE_SPACES_IN_ATTEMPTS
 
@@ -19,9 +17,9 @@ const unsigned char most_frequent_PTBR[ATTEMPTS] = {'A', 'E', 'O', 'S'};
 
 const unsigned char xor_chars[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ''`^~;?:/.>,<[]{}-=+!"};
 
-int sbxor_decode(const unsigned char xoring_byte, unsigned char* data, const unsigned int len)
+int sbxor_decode(const unsigned char xoring_byte, unsigned char* data, unsigned int len)
 {
-    int i;
+    unsigned int i;
     
     for (i=0; i<len; i++)
     {
@@ -33,7 +31,7 @@ int sbxor_decode(const unsigned char xoring_byte, unsigned char* data, const uns
 
 int count_occur(const unsigned char test_char, const unsigned char* data, const unsigned int len)
 {
-	int i, c = 0;
+	unsigned int i, c = 0;
 	
 	for (i=0; i<len; i++)
 	{
@@ -43,7 +41,7 @@ int count_occur(const unsigned char test_char, const unsigned char* data, const 
 		}
 	}
 	
-	return c;
+	return (int)c;
 }
 
 float calc_score(const unsigned char test_char, const unsigned char* data, const unsigned int len)
@@ -60,7 +58,7 @@ void brute_force_sbxor(const int lang, const unsigned char *in, const unsigned i
                        unsigned char *xor_byte)
 {
 	int i, w;
-    unsigned char *working_buffer, *freq_letters;;
+    unsigned char *working_buffer, *freq_letters;
     float scores[sizeof(xor_chars)], winner_score;
     
     *olen = 0;

@@ -1,11 +1,11 @@
-#include "repkxor.h"
+#include "../include/repkxor.h"
 
 int repkxor(const unsigned char* key, const unsigned int klen,
             const unsigned char* in,  const unsigned int ilen,
             unsigned char* out, unsigned int *olen)
 {
-	int i = 0;
-	int j = 0;
+	unsigned int i = 0;
+	unsigned int j = 0;
 	do
 	{
 		out[i] = in[i]^key[j];

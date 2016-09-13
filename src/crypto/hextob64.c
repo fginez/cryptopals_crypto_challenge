@@ -1,4 +1,4 @@
-#include "hextob64.h"
+#include "../include/hextob64.h"
 
 int find_index(char x);
 
