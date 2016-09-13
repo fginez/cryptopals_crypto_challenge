@@ -2,6 +2,10 @@
 #include "../include/libutil.h"
 #include "../include/detect_aes128ecb.h"
 
+char* s1c8_getdesc()
+{
+	return "here comes set 1 challenge 8 description";
+}
 
 int s1c8_main()
 {

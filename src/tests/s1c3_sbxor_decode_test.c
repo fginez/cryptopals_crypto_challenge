@@ -2,6 +2,11 @@
 #include "../include/libutil.h"
 #include "../include/sbxor_decode.h"
 
+char* s1c3_getdesc()
+{
+	return "here comes set 1 challenge 3 description";
+}
+
 int s1c3_main()
 {
     unsigned int out_len;

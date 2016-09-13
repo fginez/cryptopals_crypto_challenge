@@ -3,7 +3,12 @@
 #include "../include/hextob64.h"
 #include "../include/break_repkxor.h"
 
-int s1c6_test()
+char* s1c6_getdesc()
+{
+	return "here comes set 1 challenge 6 description";
+}
+
+int s1c6_main()
 {
 	char* pFile;
 	int iFileLen;

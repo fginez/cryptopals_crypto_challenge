@@ -4,6 +4,11 @@
 
 #define TEST_FILE 	"./tests/4.txt"
 
+char* s1c4_getdesc()
+{
+	return "here comes set 1 challenge 4 description";
+}
+
 int load_test_file(const char* filename, char* buf, long* len)
 {
 	FILE* fp;
@@ -133,11 +138,6 @@ int s1c4_main()
 					{
 						printf("skipped\n");	
 					}
-
-
-					
-
-
 
 					free(bin_line);
 					free(decoded_line);

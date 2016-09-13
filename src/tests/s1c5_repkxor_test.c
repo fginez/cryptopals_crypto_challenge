@@ -2,6 +2,10 @@
 #include "../include/libutil.h"
 #include "../include/repkxor.h"
 
+char* s1c5_getdesc()
+{
+	return "here comes set 1 challenge 5 description";
+}
 
 int s1c5_main()
 {

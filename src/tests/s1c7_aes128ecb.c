@@ -3,6 +3,11 @@
 #include "../include/aes128ecb.h"
 #include "../include/hextob64.h"
 
+char* s1c7_getdesc()
+{
+	return "here comes set 1 challenge 7 description";
+}
+
 int s1c7_main()
 {
 	const unsigned char key[] = "YELLOW SUBMARINE";
