@@ -2,7 +2,7 @@
 #include <openssl/evp.h>
 #include <openssl/err.h>
 
-#include "aes128ecb.h"
+#include "../include/aes128ecb.h"
 
 int aes128ecb_decrypt(const unsigned char* encryptedbuffer, int encryptedlen,
                       unsigned char* clearbuffer, int * clearlen, const unsigned char* key)
