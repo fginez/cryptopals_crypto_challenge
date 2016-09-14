@@ -4,7 +4,7 @@
 
 char* s1c5_getdesc()
 {
-	return "here comes set 1 challenge 5 description";
+	return "Challenge 5 Implement repeating-key XOR";
 }
 
 int s1c5_main()

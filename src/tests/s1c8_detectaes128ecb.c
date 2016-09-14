@@ -4,7 +4,7 @@
 
 char* s1c8_getdesc()
 {
-	return "here comes set 1 challenge 8 description";
+	return "Challenge 8 Detect AES in ECB mode";
 }
 
 int s1c8_main()

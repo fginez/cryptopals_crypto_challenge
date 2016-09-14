@@ -3,7 +3,7 @@
 
 char* s1c2_getdesc()
 {
-	return "here comes set 1 challenge 2 description";
+	return "Challenge 2 Fixed XOR";
 }
 
 int s1c2_main()

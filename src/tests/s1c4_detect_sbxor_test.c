@@ -6,7 +6,7 @@
 
 char* s1c4_getdesc()
 {
-	return "here comes set 1 challenge 4 description";
+	return "Challenge 4 Detect single-character XOR";
 }
 
 int load_test_file(const char* filename, char* buf, long* len)

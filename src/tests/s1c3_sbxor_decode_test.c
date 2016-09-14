@@ -4,7 +4,7 @@
 
 char* s1c3_getdesc()
 {
-	return "here comes set 1 challenge 3 description";
+	return "Challenge 3 Single-byte XOR cipher";
 }
 
 int s1c3_main()

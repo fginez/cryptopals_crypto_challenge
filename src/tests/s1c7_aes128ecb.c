@@ -5,7 +5,7 @@
 
 char* s1c7_getdesc()
 {
-	return "here comes set 1 challenge 7 description";
+	return "Challenge 7 AES in ECB mode";
 }
 
 int s1c7_main()

@@ -5,7 +5,7 @@
 
 char* s1c6_getdesc()
 {
-	return "here comes set 1 challenge 6 description";
+	return "Challenge 6 Break repeating-key XOR";
 }
 
 int s1c6_main()

@@ -9,7 +9,7 @@
 
 char* s1c1_getdesc()
 {
-	return "here comes set 1 challenge 1 description";
+	return "Challenge 1 Convert hex to base64";
 }
 
 
