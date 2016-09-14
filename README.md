@@ -9,7 +9,9 @@ plataformas. A idéia é que um código que seja interessante possa ser facilmen
 Os enunciados dos exercícios podem ser obtidos em https://cryptopals.com/.
 
 O estágio atual das soluções é: SET 2 em andamento.
+
 **Set 1**
+
 - [x] 01 Convert hex to base64
 - [x] 02 Fixed XOR
 - [x] 03 Single-byte XOR cipher
@@ -18,7 +20,9 @@ O estágio atual das soluções é: SET 2 em andamento.
 - [x] 06 Break repeating-key XOR
 - [x] 07 AES in ECB mode
 - [x] 08 Detect AES in ECB mode
+
 **Set 2**
+
 - [x] 09 Implement PKCS#7 padding
 - [ ] 10 Implement CBC mode *(Não iniciado)*
 - [ ] 11 An ECB/CBC detection oracle *(Não iniciado)*
