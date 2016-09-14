@@ -42,12 +42,12 @@ int s1c5_main()
 	{
 		free(out);
 		printf("SUCCESS\n");
-		return 1;
+		return 0;
 	}
 	else
 	{
 		free(out);
 		printf("FAIL");
-		return 0;
+		return -1;
 	}	
 }

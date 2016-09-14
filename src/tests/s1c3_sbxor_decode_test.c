@@ -22,9 +22,12 @@ int s1c3_main()
 	printf("XOR byte: '%c'\n", c);
 	printf("Secret message: ");
 	print_chars(out, out_len);
+
+	//TODO: ask if decoded message makes any sense
+
 	printf("\n");
     
-    return 1;
+    return 0;
 }
 
 

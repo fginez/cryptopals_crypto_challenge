@@ -18,8 +18,8 @@ int s1c2_main()
     if ( 0 == strncmp((char*)c, (char*)o, 18) )
     {
     	printf("SUCCESS\n");
-        return 1;
+        return 0;
     }
     printf("FAIL\n");
-    return 0;
+    return -1;
 }
