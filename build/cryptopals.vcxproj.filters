@@ -84,6 +84,12 @@
     <ClCompile Include="..\src\crypto\sbxor_decode.c">
       <Filter>Source Files\crypto</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\crypto\pkcs7padding.c">
+      <Filter>Source Files\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\include\s2c9_implement_pkcs7.c">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\include\aes128ecb.h">
@@ -111,6 +117,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\include\cryptopals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\include\pkcs7padding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

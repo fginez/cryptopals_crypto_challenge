@@ -10,7 +10,7 @@ typedef struct applet
 	char* (*desc)();
 } APPLET;
 
-#define NUM_OF_CHALLENGES 8
+#define NUM_OF_CHALLENGES 9
 APPLET_PROTO(s1c1);
 APPLET_PROTO(s1c2);
 APPLET_PROTO(s1c3);
@@ -19,6 +19,7 @@ APPLET_PROTO(s1c5);
 APPLET_PROTO(s1c6);
 APPLET_PROTO(s1c7);
 APPLET_PROTO(s1c8);
+APPLET_PROTO(s2c9);
 
 APPLET applet_list[NUM_OF_CHALLENGES] = {
 	INSERT_APPLET(s1c1),
@@ -29,6 +30,7 @@ APPLET applet_list[NUM_OF_CHALLENGES] = {
 	INSERT_APPLET(s1c6),
 	INSERT_APPLET(s1c7),
 	INSERT_APPLET(s1c8),
+	INSERT_APPLET(s2c9),
 };
 
 int main(int argc, char** argv)
@@ -37,7 +39,7 @@ int main(int argc, char** argv)
 
 	for ( nAppletCounter = 0; nAppletCounter < NUM_OF_CHALLENGES; nAppletCounter++ )
 	{
-		printf("Running test function for challenge %02d\n", nAppletCounter);
+		printf("Running test function for challenge %02d\n", nAppletCounter + 1 );
 		iChallengeResult[nAppletCounter] = applet_list[nAppletCounter].entrypoint(1, NULL);
 	}
 
