@@ -87,11 +87,17 @@
     <ClCompile Include="..\src\crypto\pkcs7padding.c">
       <Filter>Source Files\crypto</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\include\s2c9_implement_pkcs7.c">
+    <ClCompile Include="..\src\tests\s2c9_implement_pkcs7.c">
       <Filter>Source Files\tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\crypto\s2cl15_pkcs7_padding_validation.c">
+    <ClCompile Include="..\src\tests\s2cl15_pkcs7_padding_validation.c">
       <Filter>Source Files\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tests\s2cl10_aes_cbc.c">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\crypto\aes128cbc.c">
+      <Filter>Source Files\crypto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +129,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\include\pkcs7padding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\include\aes128cbc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
