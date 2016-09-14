@@ -91,6 +91,7 @@
     <ClCompile Include="..\src\crypto\hextob64.c" />
     <ClCompile Include="..\src\crypto\pkcs7padding.c" />
     <ClCompile Include="..\src\crypto\repkxor.c" />
+    <ClCompile Include="..\src\crypto\s2cl15_pkcs7_padding_validation.c" />
     <ClCompile Include="..\src\crypto\sbxor_decode.c" />
     <ClCompile Include="..\src\include\s2c9_implement_pkcs7.c" />
     <ClCompile Include="..\src\tests\s1c1_hextob64_test.c" />

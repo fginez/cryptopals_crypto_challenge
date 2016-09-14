@@ -90,6 +90,9 @@
     <ClCompile Include="..\src\include\s2c9_implement_pkcs7.c">
       <Filter>Source Files\tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\crypto\s2cl15_pkcs7_padding_validation.c">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\include\aes128ecb.h">

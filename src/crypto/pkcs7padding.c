@@ -24,7 +24,7 @@ int pkcs7padding_size(const int unpadded_size, const int blocklen)
 
 int pkcs7unpadding_size(const int padded_size, const int blocklen)
 {
-	return 0;
+	return -1;
 }
 
 int pkcs7padding(const int blocklen, const int inputlen, const unsigned char *input,
@@ -61,5 +61,37 @@ int pkcs7padding(const int blocklen, const int inputlen, const unsigned char *in
 int pkcs7unpadding(const int inputlen, const unsigned char *input,
 				   int* outputlen, const int maxoutputlen, unsigned char *output)
 {
-	return 0;
+	int padding_bytes = 0, n;
+	unsigned char pad;
+
+	padding_bytes = input[inputlen- 1];
+	if ( padding_bytes >= inputlen )
+	{   // Invalid padding length
+		return -1;
+	}
+
+	pad = (unsigned char) padding_bytes;
+
+	// padding validation before unpadding
+	for ( n=inputlen-padding_bytes; n<inputlen; n++ )
+	{
+		if ( input[n] != pad )
+		{   // Invalid padding
+			return -1;
+		}
+	}
+
+	if ( maxoutputlen < (inputlen - padding_bytes) )
+	{
+		return -1;
+	}
+
+	if (NULL != outputlen)
+	{
+		*outputlen = (inputlen - padding_bytes);
+	}
+
+	memcpy(output, input, inputlen - padding_bytes);
+
+	return (inputlen - padding_bytes);
 }
