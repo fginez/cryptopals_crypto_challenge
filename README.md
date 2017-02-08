@@ -1,5 +1,7 @@
 ﻿# cryptopals_crypto_challenge
 
+Cryptopals crypto challenge (A.K.A Matasano challenge)
+
 Este repositório contém as soluções desenvolvidas para o desafio chamado "cryptopals". Este desafio corresponde à um conjunto de 48
 exercícios, particionados em 8 conjuntos, que demonstram ataques reais ao mundo da criptografia.
 
