@@ -18,7 +18,7 @@ int s1c1_main(int argc, char** argv)
     int i;
     
     const unsigned char test_array[NUM_TEST_STRINGS][49]={"M\0",
-                                                          "Ma\0"
+                                                          "Ma\0",
                                                           "Man\0",
                                                           {0x49, 0x27, 0x6D, 0x20, 0x6B, 0x69, 0x6C, 
                                                            0x6C, 0x69, 0x6E, 0x67, 0x20, 0x79, 0x6F, 
@@ -56,8 +56,9 @@ int s1c1_main(int argc, char** argv)
             out_len = hextob64(test_array[i], strlen((char*)test_array[i]), pOutput);
             if (out_len)
             {
+				int compare_len=min((size_t)out_len, strlen((char*)res_array[i]));
                 printf("Testing string %d...", i);
-                if ( 0 == strncmp((char*)pOutput, (char*)res_array[i], min((size_t)out_len, strlen((char*)res_array[i]) ) ) )
+                if ( 0 == strncmp((char*)pOutput, (char*)res_array[i], compare_len ) )
                 {
                     printf("SUCCESS\n");
                 }
