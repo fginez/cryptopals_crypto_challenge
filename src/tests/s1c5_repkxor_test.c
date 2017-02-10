@@ -1,6 +1,7 @@
 #include "../include/cryptopals.h"
 #include "../include/libutil.h"
 #include "../include/repkxor.h"
+#include "../include/crypto_memcmp.h"
 
 char* s1c5_getdesc()
 {
@@ -38,7 +39,7 @@ int s1c5_main()
 	print_hex(out, out_len);
 	printf("\n");
 	printf("Checking...");
-	if ( 0 == CRYPTO_memcmp( expected_result, out, min(out_len, sizeof(expected_result)-1)) )
+	if ( 0 == CRYPTO_memcmp( (void*)expected_result, (void*)out, min(out_len, sizeof(expected_result)-1)) )
 	{
 		free(out);
 		printf("SUCCESS\n");
