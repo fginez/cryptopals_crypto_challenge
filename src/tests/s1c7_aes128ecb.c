@@ -15,7 +15,7 @@ int s1c7_main()
 	unsigned char* pEncodedFile, *pDecodedFile;
 	printf("Testing AES128 Decryption in ECB mode\n");
 
-	iEncodedLen = LoadFile("7.txt", (char**) &pEncodedFile);	
+	iEncodedLen = LoadFile("../src/tests/inputs/7.txt", (char**) &pEncodedFile);	
 	if ( 0 < iEncodedLen )
 	{
 		iDecodedLen = b64tohex_sizehelper(iEncodedLen);
@@ -33,7 +33,7 @@ int s1c7_main()
 					
 					if ( 0 == aes128ecb_decrypt(pDecodedFile, iDecodedLen, 
 						                        pClearBuffer, &iClearLen, iDecodedLen,
-												key, sizeof(key)) )
+												key, sizeof(key) -1) )
 					{
 						printf("Decrypted file [len=%d]:\n", iClearLen);
 						print_chars(pClearBuffer, iClearLen);	

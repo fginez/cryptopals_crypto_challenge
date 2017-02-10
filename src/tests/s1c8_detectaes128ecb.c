@@ -15,7 +15,7 @@ int s1c8_main()
 	
 	printf("Detecting AES128-ECB\n");
 	
-	iFileLen = LoadFile("8.txt", &pFile);
+	iFileLen = LoadFile("../src/tests/inputs/8.txt", &pFile);
 	if ( 0 < iFileLen )
 	{
 		char* pToken = 0;

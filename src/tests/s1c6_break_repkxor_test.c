@@ -14,7 +14,7 @@ int s1c6_main()
 	int iFileLen;
 	int i;
 	
-	iFileLen = LoadFile("6.txt", &pFile);
+	iFileLen = LoadFile("../src/tests/inputs/6.txt", &pFile);
 	if ( 0 < iFileLen ) 
 	{
 		int iDecodedLen = b64tohex_sizehelper(iFileLen);
