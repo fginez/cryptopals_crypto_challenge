@@ -4,9 +4,9 @@
 #define USE_SPACES_IN_ATTEMPTS
 
 #ifdef USE_SPACES_IN_ATTEMPTS
-#define ATTEMPTS	5
-const unsigned char most_frequent_EN[ATTEMPTS]   = {'E', 'T', 'A', 'O', ' '};
-const unsigned char most_frequent_PTBR[ATTEMPTS] = {'A', 'E', 'O', 'S', ' '};
+#define ATTEMPTS	8
+const unsigned char most_frequent_EN[ATTEMPTS]   = {' ', 'E', 'T', 'A', 'O', 'I', 'N', 'S'};
+const unsigned char most_frequent_PTBR[ATTEMPTS] = {' ', 'A', 'E', 'O', 'S', 'I', 'N', 'S'};
 #else
 #define ATTEMPTS	4
 const unsigned char most_frequent_EN[ATTEMPTS]   = {'E', 'T', 'A', 'O'};
@@ -15,7 +15,7 @@ const unsigned char most_frequent_PTBR[ATTEMPTS] = {'A', 'E', 'O', 'S'};
 
 
 
-const unsigned char xor_chars[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ''`^~;?:/.>,<[]{}-=+!"};
+const unsigned char xor_chars[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 |\\,.;/<>:?Á«~]^}¥[`{'\"!@#$%®&*()_+-="};
 
 int sbxor_decode(const unsigned char xoring_byte, unsigned char* data, unsigned int len)
 {
@@ -55,11 +55,11 @@ float calc_score(const unsigned char test_char, const unsigned char* data, const
 
 void brute_force_sbxor(const int lang, const unsigned char *in, const unsigned int ilen,
                        unsigned char *out, unsigned int *olen,
-                       unsigned char *xor_byte)
+                       unsigned char *xor_byte, float *score)
 {
-	int i, w;
+	int i, w, ws;
     unsigned char *working_buffer, *freq_letters;
-    float scores[sizeof(xor_chars)], winner_score;
+    float scores[sizeof(xor_chars)], winner_score, second_score;
     
     *olen = 0;
     *xor_byte = 0;
@@ -102,12 +102,16 @@ void brute_force_sbxor(const int lang, const unsigned char *in, const unsigned i
     }
     
     w = 0;
+	ws = 0;
     winner_score = 0;
+	second_score = 0;
 	for (i=0; i<sizeof(xor_chars); i++)
 	{
 		if ( scores[i] > winner_score )
 		{
+			second_score = winner_score;
 			winner_score = scores[i];
+			ws = w;
 			w = i;
 		}
 	}
@@ -118,5 +122,9 @@ void brute_force_sbxor(const int lang, const unsigned char *in, const unsigned i
 	sbxor_decode(xor_chars[w] , working_buffer, ilen);
 	
 	memcpy((char*)out, (char*) working_buffer, *olen);
+	*score = winner_score;
+
+	printf("XOR byte=%c score=%f (second option=%c score=%f)\n", *xor_byte, *score, xor_chars[ws], second_score);
+
 	free(working_buffer);	
 }
