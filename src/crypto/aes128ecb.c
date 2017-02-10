@@ -36,6 +36,8 @@ int aes128ecb_encrypt(const unsigned char* clearbuffer, const int clearlen,
 		return -1;
 	}
 
+	EVP_CIPHER_CTX_set_padding(ctx, 0);
+
 	if (1 != EVP_EncryptInit_ex(ctx, EVP_aes_128_ecb(), NULL, key, NULL))
 	{
 		return -1;
