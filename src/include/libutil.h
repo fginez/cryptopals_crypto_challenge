@@ -6,4 +6,8 @@
 #include "../util/hamming_dist.h"
 #include "../util/printbuffer.h"
 
+#ifndef min
+#define min(a,b) (a<b?a:b)
+#endif
+
 #endif
