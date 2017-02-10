@@ -1,6 +1,8 @@
 #ifndef AES128ECB_H_
 #define AES128ECB_H_
 
+#include "aes_common.h"
+
 int aes128ecb_encrypt(const unsigned char* clearbuffer, const int clearlen,
                       unsigned char* encryptedbuffer, int * encryptedlen, const int maxencryptedlen,
 					  const unsigned char* key, const int keylen);
