@@ -2,7 +2,7 @@
 #include "../include/libutil.h"
 #include "../include/sbxor_decode.h"
 
-#define TEST_FILE 	"./tests/4.txt"
+#define TEST_FILE 	"../src/tests/inputs/4.txt"
 
 char* s1c4_getdesc()
 {
@@ -107,7 +107,7 @@ int s1c4_main()
 					        (char*) bin_line, 
 					        &bin_line_len);
 
-				decoded_line = malloc(bin_line_len + 1);
+				decoded_line = (unsigned char*) malloc(bin_line_len + 1);
 				if ( NULL != decoded_line )
 				{
 					memset((char*) decoded_line, 0, bin_line_len + 1);
@@ -165,7 +165,5 @@ int s1c4_main()
 			return 0;
 		}
 	}
-
-	printf("Failed to open test file\n");
 	return 0;
 }
