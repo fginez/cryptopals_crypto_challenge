@@ -9,5 +9,5 @@ int countoccur(const unsigned char test_char, const unsigned char* data, const u
 float calc_score(const unsigned char test_char, const unsigned char* data, const unsigned int len);
 void brute_force_sbxor(const int lang, const unsigned char *in, const unsigned int ilen,
                        unsigned char *out, unsigned int *olen,
-                       unsigned char *xor_byte);
+                       unsigned char *xor_byte, float *score);
 #endif
