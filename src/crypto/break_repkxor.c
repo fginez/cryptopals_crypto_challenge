@@ -110,6 +110,7 @@ void break_it(unsigned char* pucBuffer, unsigned int uiLen)
 	printf("Discovering key\n");
 	for(i=0; i<iGuessedKeyLen; i++)
 	{
+		float score;
 		unsigned char* pTempOut = (unsigned char*) malloc(iTransposedBlockLen);
 		unsigned int uiOlen;
 		
@@ -120,9 +121,9 @@ void break_it(unsigned char* pucBuffer, unsigned int uiLen)
 		print_hex(&pucTransposedBuffer[iTargetPos], 10); 
 		
 		brute_force_sbxor(EN, &pucTransposedBuffer[iTargetPos], iTransposedBlockLen, 
-		                  pTempOut, &uiOlen, &pucKey[i]);
+		                  pTempOut, &uiOlen, &pucKey[i], &score);
 		                  
-		printf("\t-> Discovered char: %c\n", pucKey[i]);		
+		printf("\t-> Discovered char: %c [Score=%f]\n", pucKey[i], score);
 		free(pTempOut);
 	}
 	
