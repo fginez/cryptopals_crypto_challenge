@@ -102,6 +102,9 @@
     <ClCompile Include="..\src\crypto\inplace_xor.c">
       <Filter>Source Files\crypto</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\util\crypto_memcmp.c">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\include\aes128ecb.h">
@@ -135,9 +138,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\include\aes128cbc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\include\crypto_memcmp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

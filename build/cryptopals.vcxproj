@@ -107,6 +107,7 @@
     <ClCompile Include="..\src\tests\s2cl15_pkcs7_padding_validation.c" />
     <ClCompile Include="..\src\tests\_main_caller.c" />
     <ClCompile Include="..\src\util\asc2hex.c" />
+    <ClCompile Include="..\src\util\crypto_memcmp.c" />
     <ClCompile Include="..\src\util\fileops.c" />
     <ClCompile Include="..\src\util\hamming_dist.c" />
     <ClCompile Include="..\src\util\printbuffer.c" />
@@ -116,7 +117,6 @@
     <ClInclude Include="..\src\include\aes128ecb.h" />
     <ClInclude Include="..\src\include\break_repkxor.h" />
     <ClInclude Include="..\src\include\cryptopals.h" />
-    <ClInclude Include="..\src\include\crypto_memcmp.h" />
     <ClInclude Include="..\src\include\detect_aes128ecb.h" />
     <ClInclude Include="..\src\include\fixed_xor.h" />
     <ClInclude Include="..\src\include\hextob64.h" />
