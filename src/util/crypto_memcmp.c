@@ -1,7 +1,6 @@
-#ifndef __CRYPTO_MEMCMP_H__
-#define __CRYPTO_MEMCMP_H__
+#include "../include/cryptopals.h"
+#include "../util/crypto_memcmp.h"
 
-#ifndef CRYPTO_memcp
 int CRYPTO_memcmp(void* a, void* b, size_t len) 
 {
 	int res = 0;
@@ -18,6 +17,3 @@ int CRYPTO_memcmp(void* a, void* b, size_t len)
 
 	return res;
 }
-#endif
-
-#endif
