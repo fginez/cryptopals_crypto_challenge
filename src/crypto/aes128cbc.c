@@ -17,20 +17,28 @@ int aes128cbc_encrypt(	const unsigned char* clearbuffer, const unsigned int clea
   unsigned char next_iv[BLOCK_LEN];
   unsigned int  num_blocks, padded_len, i;
 
+#ifdef _USE_PKCS7_PADDING
   // Calculate padded length
   padded_len = pkcs7padding_size(clearlen, BLOCK_LEN);
   if ( padded_len > maxencryptedlen ) {
     return -1;
   }
+#else
+  padded_len = clearlen;
+#endif
 
   padded_buffer = (unsigned char*) malloc(padded_len);
   if ( NULL == padded_buffer ) {
     return -1;
   }
 
+#ifdef _USE_PKCS7_PADDING
   if ( -1 == pkcs7padding(BLOCK_LEN, clearlen, clearbuffer, &padded_len, padded_len, padded_buffer) ){
     return -1;
   }
+#else
+  memcpy(padded_buffer, clearbuffer, clearlen);
+#endif
 
   num_blocks = padded_len / BLOCK_LEN;
 
@@ -53,7 +61,6 @@ int aes128cbc_encrypt(	const unsigned char* clearbuffer, const unsigned int clea
   }
 
   *encryptedlen = padded_len;
-  memcpy(encryptedbuffer, padded_buffer, padded_len);
   free(padded_buffer);
 
   return 0;
@@ -70,13 +77,15 @@ int aes128cbc_decrypt(const unsigned char* encryptedbuffer, const int encryptedl
 	num_blocks = encryptedlen / BLOCK_LEN;
 
 	memcpy(next_iv, iv, ivlen);
-
+	*clearlen = 0;
 	for ( i=0; i<num_blocks; i++ ) {
 		int curr_block_len;
 
-		aes128ecb_decrypt(&encryptedbuffer[i*BLOCK_LEN], encryptedlen,
-						  &clearbuffer[i*BLOCK_LEN], &curr_block_len, BLOCK_LEN,
-						  key, keylen);
+		if ( 0 != aes128ecb_decrypt(&encryptedbuffer[i*BLOCK_LEN], BLOCK_LEN,
+									&clearbuffer[i*BLOCK_LEN], &curr_block_len, BLOCK_LEN,
+									key, keylen) ) {
+			return -1;
+		}
 
 		inplace_xor(&clearbuffer[i*BLOCK_LEN], next_iv, BLOCK_LEN);
 

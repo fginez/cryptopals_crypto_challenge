@@ -34,9 +34,7 @@ int aes128ecb_encrypt(const unsigned char* clearbuffer, const int clearlen,
 	if ( !(ctx = EVP_CIPHER_CTX_new()) )
 	{
 		return -1;
-	}
-
-	EVP_CIPHER_CTX_set_padding(ctx, 0);
+	}	
 
 	if (1 != EVP_EncryptInit_ex(ctx, EVP_aes_128_ecb(), NULL, key, NULL))
 	{
@@ -47,6 +45,8 @@ int aes128ecb_encrypt(const unsigned char* clearbuffer, const int clearlen,
 	{
 		return -1;
 	}
+
+	EVP_CIPHER_CTX_set_padding(ctx, 0);
 
 	if (1 != EVP_EncryptFinal_ex(ctx, encryptedbuffer + (*encryptedlen), &tmplen) )
 	{
@@ -93,24 +93,33 @@ int aes128ecb_decrypt(const unsigned char* encryptedbuffer, const int encryptedl
 
 	if ( !(ctx = EVP_CIPHER_CTX_new()) )
 	{
+		printf("openSSL error: %s\n", ERR_error_string(ERR_get_error(), NULL));
 		return -1;
 	}
 
 	if (1 != EVP_DecryptInit_ex(ctx, EVP_aes_128_ecb(), NULL, key, NULL))
 	{
+		printf("openSSL error: %s\n", ERR_error_string(ERR_get_error(), NULL));
 		return -1;
 	}
 
 	if (1 != EVP_DecryptUpdate(ctx, clearbuffer, clearlen, encryptedbuffer, encryptedlen))
 	{
+		printf("openSSL error: %s\n", ERR_error_string(ERR_get_error(), NULL));
 		return -1;
 	}
+
+	EVP_CIPHER_CTX_set_padding(ctx, 0);
 
 	if (1 != EVP_DecryptFinal_ex(ctx, clearbuffer + (*clearlen), &tmplen) )
 	{
+		printf("openSSL error: %s\n", ERR_error_string(ERR_get_error(), NULL));
 		return -1;
 	}
 
+	// It is important to keep this call at this exact point.
+	// If you use it before, padding will be re-enabled, causing
+	// EVP_DecryptFinal_ex to return "bad decrypt".
 	EVP_CIPHER_CTX_free(ctx);
 
 	*clearlen += tmplen;
