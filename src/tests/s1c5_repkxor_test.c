@@ -1,7 +1,6 @@
 #include "../include/cryptopals.h"
 #include "../include/libutil.h"
 #include "../include/repkxor.h"
-#include "../include/crypto_memcmp.h"
 
 char* s1c5_getdesc()
 {
