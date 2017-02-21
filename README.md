@@ -26,8 +26,8 @@ O estágio atual das soluções é: SET 2 em andamento.
 **Set 2**
 
 - [x] 09 Implement PKCS#7 padding
-- [ ] 10 Implement CBC mode *(Não iniciado)*
-- [ ] 11 An ECB/CBC detection oracle *(Não iniciado)*
+- [x] 10 Implement CBC mode
+- [x] 11 An ECB/CBC detection oracle
 - [ ] 12 Byte-at-a-time ECB decryption (Simple) *(Não iniciado)*
 - [ ] 13 ECB cut-and-paste *(Não iniciado)*
 - [ ] 14 Byte-at-a-time ECB decryption (Harder) *(Não iniciado)*
