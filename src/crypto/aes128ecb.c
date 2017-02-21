@@ -14,13 +14,13 @@ int aes128ecb_encrypt(const unsigned char* clearbuffer, const int clearlen,
 	ERR_load_crypto_strings();
 	OpenSSL_add_all_algorithms();
 	OPENSSL_config(NULL);
-
+#ifdef _AES_DEBUG
 	printf("aes128ecb_encrypt [in] inp=%8.8X il=%d k=%8.8X kl=%d\n",
            (unsigned int) clearbuffer,
            (unsigned int) clearlen,
            (unsigned int) key,
 		   (unsigned int) keylen);
-
+#endif
 	if ( 16 != keylen )
 	{
 		printf("aes128ecb_encrypt - invalid key len(%d)\n", keylen);
@@ -62,11 +62,11 @@ int aes128ecb_encrypt(const unsigned char* clearbuffer, const int clearlen,
 	EVP_CIPHER_CTX_free(ctx);
 
 	*encryptedlen += tmplen;
-
+#ifdef _AES_DEBUG
 	printf("aes128ecb_encrypt [out] outp=%8.8X ol=%d\n",
            (unsigned int) encryptedbuffer,
            (unsigned int) *encryptedlen);
-
+#endif
 	return 0;
 }
 
@@ -80,13 +80,13 @@ int aes128ecb_decrypt(const unsigned char* encryptedbuffer, const int encryptedl
 	ERR_load_crypto_strings();
 	OpenSSL_add_all_algorithms();
 	OPENSSL_config(NULL);
-
+#ifdef _AES_DEBUG
 	printf("aes128ecb_decrypt [in] inp=%8.8X il=%d k=%8.8X kl=%d\n",
            (unsigned int) encryptedbuffer,
            (unsigned int) encryptedlen,
            (unsigned int) key,
 		   (unsigned int) keylen);
-
+#endif
 	if ( 16 != keylen )
 	{
 		return -1;
@@ -129,10 +129,10 @@ int aes128ecb_decrypt(const unsigned char* encryptedbuffer, const int encryptedl
 	EVP_CIPHER_CTX_free(ctx);
 
 	*clearlen += tmplen;
-
+#ifdef _AES_DEBUG
 	printf("aes128ecb_decrypt [out] outp=%8.8X ol=%d\n",
            (unsigned int) clearbuffer,
            (unsigned int) *clearlen);
-
+#endif
 	return 0;
 }

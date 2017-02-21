@@ -6,6 +6,36 @@
 #include "../include/aes128ecb.h"
 #include <openssl/rand.h>
 
+static unsigned char g_OracleKey[BLOCK_LEN];
+static unsigned char g_Init = 0;
+
+void initOracleKey() 
+{
+	RAND_bytes(g_OracleKey, BLOCK_LEN);
+}
+
+void initOracle()
+{
+	initOracleKey();
+	g_Init = 1;
+}
+
+void resetOracle()
+{
+	g_Init = 0;
+}
+
+int aes128ecb_oracle(const unsigned char* input, const unsigned int input_len,
+					 unsigned char* output,  unsigned int *output_len, const unsigned int max_output_len) {
+
+	if (!g_Init)
+		initOracle();
+
+	return aes128ecb_encrypt(	input, input_len,
+								output, (int*) output_len, max_output_len,
+								g_OracleKey, BLOCK_LEN);
+}
+
 int encryption_oracle(const unsigned char* input, const unsigned int input_len,
 					  unsigned char* output, unsigned int *output_len, const unsigned int max_output_len) {
 	int method;
