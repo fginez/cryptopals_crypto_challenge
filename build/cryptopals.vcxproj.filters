@@ -105,6 +105,12 @@
     <ClCompile Include="..\src\util\crypto_memcmp.c">
       <Filter>Source Files\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\crypto\encryption_oracle.c">
+      <Filter>Source Files\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tests\s2c11_detection_oracle.c">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\include\aes128ecb.h">
@@ -138,6 +144,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\include\aes128cbc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\include\encryption_oracle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\include\aes_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
