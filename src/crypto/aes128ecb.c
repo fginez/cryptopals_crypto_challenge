@@ -23,26 +23,31 @@ int aes128ecb_encrypt(const unsigned char* clearbuffer, const int clearlen,
 
 	if ( 16 != keylen )
 	{
+		printf("aes128ecb_encrypt - invalid key len(%d)\n", keylen);
 		return -1;
 	}
 
 	if ( maxencryptedlen < clearlen )
 	{
+		printf("aes128ecb_encrypt - short buffer(max=%d needed=%d)\n", maxencryptedlen, clearlen);
 		return -1;
 	}
 
 	if ( !(ctx = EVP_CIPHER_CTX_new()) )
 	{
+		printf("openSSL error: %s\n", ERR_error_string(ERR_get_error(), NULL));
 		return -1;
 	}	
 
 	if (1 != EVP_EncryptInit_ex(ctx, EVP_aes_128_ecb(), NULL, key, NULL))
 	{
+		printf("openSSL error: %s\n", ERR_error_string(ERR_get_error(), NULL));
 		return -1;
 	}
 
 	if (1 != EVP_EncryptUpdate(ctx, encryptedbuffer, encryptedlen, clearbuffer, clearlen))
 	{
+		printf("openSSL error: %s\n", ERR_error_string(ERR_get_error(), NULL));
 		return -1;
 	}
 
@@ -50,6 +55,7 @@ int aes128ecb_encrypt(const unsigned char* clearbuffer, const int clearlen,
 
 	if (1 != EVP_EncryptFinal_ex(ctx, encryptedbuffer + (*encryptedlen), &tmplen) )
 	{
+		printf("openSSL error: %s\n", ERR_error_string(ERR_get_error(), NULL));
 		return -1;
 	}
 
