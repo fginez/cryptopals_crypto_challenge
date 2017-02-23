@@ -53,22 +53,64 @@ void put_screen_divisor()
 
 int main(int argc, char** argv)
 {
+	int iCurrArg = 1, iRemainingArgs = argc;
 	int nAppletCounter = 0, iChallengeResult[NUM_OF_CHALLENGES];
 
-	for ( nAppletCounter = 0; nAppletCounter < NUM_OF_CHALLENGES; nAppletCounter++ )
-	{
-		printf("Running test function for challenge %02d\n", nAppletCounter + 1 );
-		printf("%-60s\n", applet_list[nAppletCounter].desc());
-		iChallengeResult[nAppletCounter] = applet_list[nAppletCounter].entrypoint(1, NULL);
-		put_screen_divisor();
-	}
+	if ( argc > 1 ) {
+		// parse arguments
+		int iArgLen = strlen(argv[iCurrArg]);
+		iRemainingArgs--;
 
-	// Show results summary
-	printf("\n-----------------[ SUMMARY OF TEST RESULTS ]-----------------\n\n");
-	for ( nAppletCounter = 0; nAppletCounter < NUM_OF_CHALLENGES; nAppletCounter++ )
-	{
-		printf("%-60s ", applet_list[nAppletCounter].desc());
-		printf("[%7s]\n", (iChallengeResult[nAppletCounter]?"FAIL":"SUCCESS"));
+		if ( 0 == strncmp("--list-applets", argv[iCurrArg], iCurrArg) ){
+			int i;
+			for ( i=0; i<NUM_OF_CHALLENGES; i++ ){
+				printf("[%d] %s\n", i, applet_list[i].desc());
+			}
+		}
+		else if ( 0 == strncmp("--applet", argv[iCurrArg], iCurrArg) ){
+			if ( iRemainingArgs ) {
+				iCurrArg++;
+				// Validate argument
+				iArgLen = strlen(argv[iCurrArg]);
+				if ( iArgLen < 3 ) {
+					if ( argv[iCurrArg][0] >= '0' && argv[iCurrArg][0] <= '9' &&
+						 argv[iCurrArg][1] >= '0' && argv[iCurrArg][1] <= '9' ) {
+						int iAppletNum = (argv[iCurrArg][0] - 0x30)*10 + (argv[iCurrArg][1]-0x30);
+						if ( iAppletNum < NUM_OF_CHALLENGES ) {
+							// Execute applet
+							int iLocalResult;
+							printf("%-60s\n", applet_list[iAppletNum].desc());
+							iLocalResult = applet_list[iAppletNum].entrypoint(1, NULL);
+							printf("[%7s]\n", iLocalResult?"FAIL":"SUCCESS");
+						} else {
+							printf("Invalid applet number\n");
+						}
+					} else {
+						printf("Invalid format for argument after '--applet'\n");
+					}
+				} else {
+					printf("Unexpected argument length after '--applet'\n");
+				}
+			} else {
+				printf("Invalid usage of '--applet' argument\n");
+			}
+		}
+
+	}
+	else {
+		for ( nAppletCounter = 0; nAppletCounter < NUM_OF_CHALLENGES; nAppletCounter++ ) {
+			printf("Running test function for challenge %02d\n", nAppletCounter + 1 );
+			printf("%-60s\n", applet_list[nAppletCounter].desc());
+			iChallengeResult[nAppletCounter] = applet_list[nAppletCounter].entrypoint(1, NULL);
+			put_screen_divisor();
+		}
+
+		// Show results summary
+		printf("\n-----------------[ SUMMARY OF TEST RESULTS ]-----------------\n\n");
+		for ( nAppletCounter = 0; nAppletCounter < NUM_OF_CHALLENGES; nAppletCounter++ ) {
+			printf("%-60s ", applet_list[nAppletCounter].desc());
+			printf("[%7s]\n", (iChallengeResult[nAppletCounter]?"FAIL":"SUCCESS"));
+		}
 	}
 
 	return 0;
