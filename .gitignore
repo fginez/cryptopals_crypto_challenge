@@ -60,5 +60,5 @@ Debug
 build/Debug
 
 # Binaries
-.o
-.d
+*.o
+*.d
