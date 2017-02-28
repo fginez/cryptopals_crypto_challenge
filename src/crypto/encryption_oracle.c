@@ -9,7 +9,7 @@
 static unsigned char g_OracleKey[BLOCK_LEN];
 static unsigned char g_Init = 0;
 
-void initOracleKey() 
+void initOracleKey()
 {
 	RAND_bytes(g_OracleKey, BLOCK_LEN);
 }
@@ -64,14 +64,14 @@ int encryption_oracle_ex(const unsigned char* input, const unsigned int input_le
 		rnd_buffer_a[i] = rand() % 0xFF;
 		rnd_buffer_b[i] = rand() % 0xFF;
 	}
-	
+
 	local_input_len = input_len + 2*rnd_var_len;
 	if ( local_input_len % BLOCK_LEN ) {
 		local_input_len += (BLOCK_LEN - (local_input_len % BLOCK_LEN));
 	}
 
 	if(max_output_len < local_input_len) {
-		printf("encryption_oracle_ex fail - short output buffer\n");
+		printf("encryption_oracle_ex fail - short output buffer (max len is %d, at least %d is required)\n", max_output_len, local_input_len);
 		return -1;
 	}
 
@@ -83,15 +83,15 @@ int encryption_oracle_ex(const unsigned char* input, const unsigned int input_le
 	memset(local_input, 0, local_input_len);
 	memcpy(&local_input[0], rnd_buffer_a, variable_len[idx_var_len]);
 	memcpy(&local_input[0+variable_len[idx_var_len]], input, input_len);
-	memcpy(&local_input[0+input_len+variable_len[idx_var_len]], rnd_buffer_b, variable_len[idx_var_len]);	
+	memcpy(&local_input[0+input_len+variable_len[idx_var_len]], rnd_buffer_b, variable_len[idx_var_len]);
 
 	if (method) {
 		// Use CBC
 		unsigned char iv[BLOCK_LEN];
 		RAND_bytes(iv, BLOCK_LEN);
-		if ( 0 != aes128cbc_encrypt(local_input, local_input_len, 
-									output, output_len, max_output_len, 
-									key, sizeof(key), 
+		if ( 0 != aes128cbc_encrypt(local_input, local_input_len,
+									output, output_len, max_output_len,
+									key, sizeof(key),
 									iv, sizeof(iv)) ) {
 			printf("Encrypt fail\n");
 			free(local_input);
@@ -130,7 +130,7 @@ int detect_mode()
 		return -1;
 	}
 
-	max_output_len = choosen_len + 30;
+	max_output_len = choosen_len + 50;
 	output = (unsigned char*) malloc(max_output_len);
 	if ( NULL == output ) {
 		free(choosen_input);
@@ -160,7 +160,7 @@ int detect_mode()
 		} else {
 			printf("CBC detected (expected %s)\n", (expected_method?"CBC":"ECB"));
 		}
-		
+
 	} else {
 		printf("Encryption oracle error\n");
 		free(choosen_input);
