@@ -16,14 +16,16 @@ int LoadFile(const char* szFilename, char** ppBuffer)
 		{
 			FILE* fp = fopen (szFilename, "rb");
 			if ( NULL != fp )
-			{			
-				iBytesRead = fread(*ppBuffer, 1, iFileLen, fp);			
+			{
+				iBytesRead = fread(*ppBuffer, 1, iFileLen, fp);
 				fflush(fp);
 				fclose(fp);
 			}
 		}
+	} else {
+		printf("LoadFile: unable to load %s", szFilename);
 	}
-	
+
 	return iBytesRead;
 }
 
@@ -38,6 +40,6 @@ int GetFileLen(const char* szFilename)
 		iFileLen = ftell(fp);
 		fclose(fp);
 	}
-	
-	return iFileLen;	
+
+	return iFileLen;
 }
