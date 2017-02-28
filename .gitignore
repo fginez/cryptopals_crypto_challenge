@@ -60,3 +60,5 @@ Debug
 build/Debug
 
 # Binaries
+.o
+.d
