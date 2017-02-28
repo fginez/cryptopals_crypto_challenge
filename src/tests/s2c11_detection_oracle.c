@@ -3,7 +3,7 @@
 
 char* s2c11_getdesc()
 {
-	return "Challenge 9 An ECB/CBC detection oracle";
+	return "Challenge 11 An ECB/CBC detection oracle";
 }
 
 int s2c11_main(int argc, char** argv)
