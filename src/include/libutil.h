@@ -6,6 +6,7 @@
 #include "../util/hamming_dist.h"
 #include "../util/printbuffer.h"
 #include "../util/crypto_memcmp.h"
+#include "../util/little_json.h"
 
 #ifndef min
 #define min(a,b) (a<b?a:b)
