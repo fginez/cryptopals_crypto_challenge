@@ -5,16 +5,16 @@ int pkcs7padding_size(const int unpadded_size, const int blocklen)
 	int extra_bytes = unpadded_size % blocklen;
 	int blocks = unpadded_size / blocklen;
 	int paddedsize = 0;
-	
+
 	if ( 0 == blocks )
 	{   // message is shorter than one block
-		paddedsize = 1 * blocklen;	
-	} 
+		paddedsize = 1 * blocklen;
+	}
 	else if ( 0 < blocks && 0 == extra_bytes )
 	{  // message length is equal to blocklen
 		paddedsize = (blocks+1) * blocklen;
 	}
-	else 
+	else
 	{  // message length is longer than one block, but blocklength is broken
 		paddedsize = (blocks+1) * blocklen;
 	}
@@ -22,8 +22,12 @@ int pkcs7padding_size(const int unpadded_size, const int blocklen)
 	return paddedsize;
 }
 
-int pkcs7unpadding_size(const int padded_size, const int blocklen)
+int pkcs7unpadding_size(const unsigned char* input, const int padded_size, const int blocklen)
 {
+	int padding = input[padded_size-1];
+	if ( padding >= 1 && padding <= blocklen )
+		return padded_size-padding;
+
 	return -1;
 }
 
