@@ -6,12 +6,19 @@
 #include "../include/aes128ecb.h"
 #include <openssl/rand.h>
 
+//#define __FIXED_ORACLE_KEY__
+
 static unsigned char g_OracleKey[BLOCK_LEN];
 static unsigned char g_Init = 0;
 
 void initOracleKey()
 {
+#ifdef __FIXED_ORACLE_KEY__
+	// very useful for debugging
+	memset(g_OracleKey, 0x01, BLOCK_LEN);
+#else
 	RAND_bytes(g_OracleKey, BLOCK_LEN);
+#endif
 }
 
 void initOracle()
@@ -26,7 +33,7 @@ void resetOracle()
 }
 
 int aes128ecb_oracle(const unsigned char* input, const unsigned int input_len,
-					 unsigned char* output,  unsigned int *output_len, const unsigned int max_output_len) {
+                     unsigned char* output,  unsigned int *output_len, const unsigned int max_output_len) {
 
 	if (!g_Init)
 		initOracle();
