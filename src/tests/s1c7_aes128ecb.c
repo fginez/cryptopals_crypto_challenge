@@ -2,7 +2,7 @@
 #include "../include/libutil.h"
 #include "../include/aes128ecb.h"
 #include "../include/hextob64.h"
-
+#include "../include/pkcs7padding.h"
 char* s1c7_getdesc()
 {
 	return "Challenge 7 AES in ECB mode";
@@ -15,7 +15,7 @@ int s1c7_main()
 	unsigned char* pEncodedFile, *pDecodedFile;
 	printf("Testing AES128 Decryption in ECB mode\n");
 
-	iEncodedLen = LoadFile("../src/tests/inputs/7.txt", (char**) &pEncodedFile);	
+	iEncodedLen = LoadFile("../src/tests/inputs/7.txt", (char**) &pEncodedFile);
 	if ( 0 < iEncodedLen )
 	{
 		iDecodedLen = b64tohex_sizehelper(iEncodedLen);
@@ -30,41 +30,46 @@ int s1c7_main()
 				if ( NULL != pClearBuffer )
 				{
 					int iClearLen = 0;
-					
-					if ( 0 == aes128ecb_decrypt(pDecodedFile, iDecodedLen, 
+
+					if ( 0 == aes128ecb_decrypt(pDecodedFile, iDecodedLen,
 						                        pClearBuffer, &iClearLen, iDecodedLen,
 												key, sizeof(key) -1) )
 					{
+						int unppaded_size = pkcs7unpadding_size(pClearBuffer, iClearLen, BLOCK_LEN );
+						if ( -1 != unppaded_size ){
+							iClearLen = unppaded_size;
+						}
+
 						printf("Decrypted file [len=%d]:\n", iClearLen);
-						print_chars(pClearBuffer, iClearLen);	
+						print_chars(pClearBuffer, iClearLen);
 					}
-					
+
 					free(pClearBuffer);
 				}
 				else
 				{
-					printf("Out of memory @ pClearBuffer\n");	
+					printf("Out of memory @ pClearBuffer\n");
 				}
 			}
 			else
 			{
-				printf("Invalid decoded size\n");	
+				printf("Invalid decoded size\n");
 			}
-			
-			free(pDecodedFile);	
+
+			free(pDecodedFile);
 		}
 		else
 		{
-			printf("Out of memory @ pDecodedFile\n");	
+			printf("Out of memory @ pDecodedFile\n");
 		}
-		
+
 		free(pEncodedFile);
 	}
 	else
 	{
-		printf("Failed to open file\n");	
+		printf("Failed to open file\n");
 	}
-	
-	
-	return 0;	
+
+
+	return 0;
 }

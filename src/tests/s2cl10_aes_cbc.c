@@ -2,17 +2,18 @@
 #include "../include/libutil.h"
 #include "../include/hextob64.h"
 #include "../include/aes128cbc.h"
+#include "../include/pkcs7padding.h"
 
 #define TESTS	2
 
-const unsigned char lengths[2][4] = { 
+const unsigned char lengths[2][4] = {
 	{16, 16, 16, 16},
 	{32, 16, 16, 32},
 };
 
 const unsigned char inputs[2][32] = {
 	{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F},
-	{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 
+	{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
 	 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F}
 };
 
@@ -60,7 +61,7 @@ int s2c10_pretest() {
 			return -1;
 		}
 
-		if ( 0 == aes128cbc_decrypt(testbuffer, iEncryptedLen, 
+		if ( 0 == aes128cbc_decrypt(testbuffer, iEncryptedLen,
 									testbuffer2, &iClearLen, sizeof(testbuffer2),
 									keys[i], lengths[i][1],
 									vectors[i], lengths[i][2]) ){
@@ -117,6 +118,10 @@ int  s2c10_main(int argc, char** argv)
 												key, strlen((char*)key),
 												iv, sizeof(iv)) )
 					{
+						int unppaded_size = pkcs7unpadding_size(pClearBuffer, iClearLen, BLOCK_LEN );
+						if ( -1 != unppaded_size ){
+							iClearLen = unppaded_size;
+						}
 						printf("Decrypted file [len=%d]:\n", iClearLen);
 						print_chars(pClearBuffer, iClearLen);
 					} else {
@@ -142,14 +147,14 @@ int  s2c10_main(int argc, char** argv)
 				free(pDecodedFile);
 				free(pEncodedFile);
 				return -1;
-			}			
+			}
 		}
 		else
 		{
 			printf("Out of memory @ pDecodedFile\n");
 			free(pEncodedFile);
 			return -1;
-		}		
+		}
 	}
 	else
 	{
