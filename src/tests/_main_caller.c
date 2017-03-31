@@ -10,7 +10,7 @@ typedef struct applet
 	char* (*desc)();
 } APPLET;
 
-#define NUM_OF_CHALLENGES 13
+#define NUM_OF_CHALLENGES 15
 APPLET_PROTO(s1c1);
 APPLET_PROTO(s1c2);
 APPLET_PROTO(s1c3);
@@ -23,6 +23,8 @@ APPLET_PROTO(s2c9);
 APPLET_PROTO(s2c10);
 APPLET_PROTO(s2c11);
 APPLET_PROTO(s2c12);
+APPLET_PROTO(s2c13);
+APPLET_PROTO(s2c14);
 APPLET_PROTO(s2c15);
 
 APPLET applet_list[NUM_OF_CHALLENGES] = {
@@ -38,6 +40,8 @@ APPLET applet_list[NUM_OF_CHALLENGES] = {
 	INSERT_APPLET(s2c10),
 	INSERT_APPLET(s2c11),
 	INSERT_APPLET(s2c12),
+	INSERT_APPLET(s2c13),
+	INSERT_APPLET(s2c14),		
 	INSERT_APPLET(s2c15),
 };
 
@@ -61,41 +65,45 @@ int main(int argc, char** argv)
 		int iArgLen = strlen(argv[iCurrArg]);
 		iRemainingArgs--;
 
-		if ( 0 == strncmp("--list-applets", argv[iCurrArg], iCurrArg) ){
+		if ( 0 == strncmp("--list-applets", argv[iCurrArg], strlen(argv[iCurrArg])) ){
 			int i;
 			for ( i=0; i<NUM_OF_CHALLENGES; i++ ){
 				printf("[%d] %s\n", i, applet_list[i].desc());
 			}
 		}
-		else if ( 0 == strncmp("--applet", argv[iCurrArg], iCurrArg) ){
+		else if ( 0 == strncmp("--applet", argv[iCurrArg], strlen(argv[iCurrArg])) ){
 			if ( iRemainingArgs ) {
+				int iAppletNum;
 				iCurrArg++;
 				// Validate argument
 				iArgLen = strlen(argv[iCurrArg]);
-				if ( iArgLen < 3 ) {
-					if ( argv[iCurrArg][0] >= '0' && argv[iCurrArg][0] <= '9' &&
-						 argv[iCurrArg][1] >= '0' && argv[iCurrArg][1] <= '9' ) {
-						int iAppletNum = (argv[iCurrArg][0] - 0x30)*10 + (argv[iCurrArg][1]-0x30);
-						if ( iAppletNum < NUM_OF_CHALLENGES ) {
-							// Execute applet
-							int iLocalResult;
-							printf("%-60s\n", applet_list[iAppletNum].desc());
-							iLocalResult = applet_list[iAppletNum].entrypoint(1, NULL);
-							printf("[%7s]\n", iLocalResult?"FAIL":"SUCCESS");
-						} else {
-							printf("Invalid applet number\n");
-						}
+				if ( 1 == iArgLen) {
+					iAppletNum = (argv[iCurrArg][0] - 0x30);
+				} else if ( 2 == iArgLen ) {
+					iAppletNum = (argv[iCurrArg][0] - 0x30)*10;
+					iAppletNum += (argv[iCurrArg][1] - 0x30);
+				} else {
+					iAppletNum = -1;
+				}
+
+				if ( -1 != iAppletNum ) {
+					if ( iAppletNum < NUM_OF_CHALLENGES ) {
+						// Execute applet
+						int iLocalResult;
+						printf("Running applet %d.\n", iAppletNum);
+						printf("%-60s\n", applet_list[iAppletNum].desc());
+						iLocalResult = applet_list[iAppletNum].entrypoint(1, NULL);
+						printf("[%7s]\n", iLocalResult?"FAIL":"SUCCESS");
 					} else {
-						printf("Invalid format for argument after '--applet'\n");
+						printf("Invalid applet number (%d)\n", iAppletNum);
 					}
 				} else {
-					printf("Unexpected argument length after '--applet'\n");
+					printf("Invalid format for argument after '--applet'\n");
 				}
 			} else {
-				printf("Invalid usage of '--applet' argument\n");
+				printf("Unexpected argument length after '--applet'\n");
 			}
 		}
-
 	}
 	else {
 		for ( nAppletCounter = 0; nAppletCounter < NUM_OF_CHALLENGES; nAppletCounter++ ) {
